@@ -14,7 +14,6 @@ typedef struct
 	int Length;
 	int Ini;
 	int Outi;
-	int count;
 } ring_t;
 
 ring_t *init( int length );

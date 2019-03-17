@@ -38,7 +38,6 @@ ring_t *init( int length )
 		ptr->Length = length;
 		ptr->Ini = 0;
 		ptr->Outi = 0;
-		ptr->count = 0;
 	}
 	
 	return ptr;
@@ -59,7 +58,6 @@ int insert( ring_t *ring, char data )
     {
 		ring->Buffer[ring->Ini]= data;
 		ring->Ini=0;
-		ring->count++;
 		status=success;
     }
     
@@ -67,7 +65,6 @@ int insert( ring_t *ring, char data )
     {
 		ring->Buffer[ring->Ini]= data;
 		ring->Ini++;
-		ring->count++;
 		status=success;
     }
 	
@@ -90,7 +87,6 @@ int remove_element( ring_t *ring, char *data )
     {
 		*data = ring->Buffer[ring->Outi];
 		ring->Outi=0;
-		ring->count--;
 		status=success;
     }
     
@@ -98,7 +94,6 @@ int remove_element( ring_t *ring, char *data )
     {
 		*data = ring->Buffer[ring->Outi];
 		ring->Outi++;
-		ring->count--;
 		status=success;
     }
 	
@@ -111,8 +106,6 @@ int remove_element( ring_t *ring, char *data )
 int entries( ring_t *ring )
 {
 	int num_elements;
-	printf("Number of elements present in the Buffer is: %d\n",ring->count);
-	
 	if(ring->Ini >= ring->Outi)
 	{
 		num_elements = ring->Ini - ring->Outi;
