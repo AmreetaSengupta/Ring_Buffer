@@ -51,8 +51,8 @@ int insert( ring_t *ring, char data )
 	
 	if(((ring->Ini+1)%ring->Length )==ring->Outi)
 	{
-	printf("Buffer full\n");
-	status = fail;
+		printf("Buffer full\n");
+		status = fail;
 	}
 	
 	else if(ring->Ini== ring->Length-1)
@@ -119,7 +119,7 @@ int entries( ring_t *ring )
 	}
 	else
 	{
-		num_elements = ring->Length-(ring->Ini - ring->Outi);
+		num_elements = ring->Length-(ring->Outi - ring->Ini);
 	}
 	
 	printf("Number of elements present in the Buffer is: %d\n",num_elements);
