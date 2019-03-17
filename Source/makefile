@@ -9,6 +9,7 @@ ring.o :  ring.c ../Include/ring.h
 
 test_prac: test_prac.c ring.c ../Include/ring.h
 	gcc test_prac.c ring.c -lm -lcunit -o test_prac
+
 clean : 	
 	rm -f circbuff ring_test.o ring.o
 

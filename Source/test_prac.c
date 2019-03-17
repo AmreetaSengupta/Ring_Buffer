@@ -63,43 +63,39 @@ int clean_suite1(void)
    }
 }
 
-/* Simple test of fprintf().
- * Writes test data to the temporary file and checks
- * whether the expected number of bytes were written.
- */
-void testFPRINTF(void)
-{
-   int i1 = 10;
 
-   if (NULL != temp_file) {
-      CU_ASSERT(0 == fprintf(temp_file, ""));
-      CU_ASSERT(2 == fprintf(temp_file, "Q\n"));
-      CU_ASSERT(7 == fprintf(temp_file, "i1 = %d", i1));
-   }
-}
-
-/* Simple test of fread().
- * Reads the data previously written by testFPRINTF()
- * and checks whether the expected characters are present.
- * Must be run after testFPRINTF().
- */
-void testFREAD(void)
-{
-   unsigned char buffer[20];
-
-   if (NULL != temp_file) {
-      rewind(temp_file);
-      CU_ASSERT(9 == fread(buffer, sizeof(unsigned char), 20, temp_file));
-      CU_ASSERT(0 == strncmp(buffer, "Q\ni1 = 10", 9));
-   }
-}
 void test_init()
 {
-ring_t *ptr;
-ptr= init(7);
-CU_ASSERT_NOT_EQUAL(ptr,NULL);
+	ring_t *ptr;
+	ptr= init(7);
+	CU_ASSERT_NOT_EQUAL(ptr,NULL);
 }
 
+void test_insert()
+{
+	ring_t *ptr;
+	ptr= init(7);
+	for(int i =0; i<4; i++)
+	{
+		CU_ASSERT_EQUAL(insert(ptr,i),0);
+	}
+}
+
+void test_remove()
+{
+	ring_t *ptr;
+	char ele;
+	ptr= init(7);
+	for(int i =0; i<4; i++)
+	{
+		CU_ASSERT_EQUAL(insert(ptr,i),0);
+	}
+	for(int i =0; i<4; i++)
+	{
+		CU_ASSERT_EQUAL(remove_element(ptr,&ele),0);
+	}
+	
+}
 /* The main() function for setting up and running the tests.
  * Returns a CUE_SUCCESS on successful running, another
  * CUnit error code on failure.
@@ -121,9 +117,9 @@ int main()
 
    /* add the tests to the suite */
    /* NOTE - ORDER IS IMPORTANT - MUST TEST fread() AFTER fprintf() */
-   if ((NULL == CU_add_test(pSuite, "test of fprintf()", testFPRINTF)) ||
-       (NULL == CU_add_test(pSuite, "test of fread()", testFREAD)) ||
-       (NULL == CU_add_test(pSuite, "test of CB_INIT()", test_init)) )
+   if ((NULL == CU_add_test(pSuite, "test of INIT()", test_init)) ||
+       (NULL == CU_add_test(pSuite, "test of INSERT()", test_insert)) ||
+       (NULL == CU_add_test(pSuite, "test of REMOVE()", test_remove)))
    {
       CU_cleanup_registry();
       return CU_get_error();
